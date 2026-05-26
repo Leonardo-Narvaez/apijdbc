@@ -1,6 +1,6 @@
 package com.krakedev.videojuegos.entidades;
 
-public class VideoJuego {
+public class Videojuego {
 	private String codigo;
 	private String nombre;
 	private String plataforma;
@@ -56,11 +56,11 @@ public class VideoJuego {
 		this.genero = genero;
 	}
 
-	public VideoJuego() {
+	public Videojuego() {
 
 	}
 
-	public VideoJuego(String codigo, String nombre, String plataforma, double precio, boolean disponible,
+	public Videojuego(String codigo, String nombre, String plataforma, double precio, boolean disponible,
 			String genero) {
 
 		this.codigo = codigo;
@@ -76,7 +76,5 @@ public class VideoJuego {
 		return "VideoJuego [codigo=" + codigo + ", nombre=" + nombre + ", plataforma=" + plataforma + ", precio="
 				+ precio + ", disponible=" + disponible + ", genero=" + genero + "]";
 	}
-	
-	
 
 }
