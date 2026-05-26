@@ -154,4 +154,33 @@ public class VideojuegoJdbc {
 		return juego;
 	}
 
+	public static boolean eliminar(String codigo) {
+		Connection con = null;
+
+		try {
+			con = Conexion.getConnection();
+			String sql = "DELETE FROM videojuegos WHERE codigo = ?";
+			PreparedStatement ps = con.prepareStatement(sql);
+
+			ps.setString(1, codigo);
+
+			int filas = ps.executeUpdate();
+
+			log.info("Filas eliminadas: " + filas);
+
+			return true;
+
+		} catch (Exception e) {
+			log.error("Error al eliminar: ", e);
+			throw new RuntimeException("Error al Eliminar: " + e.getMessage());
+		} finally {
+			try {
+				con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+
 }
