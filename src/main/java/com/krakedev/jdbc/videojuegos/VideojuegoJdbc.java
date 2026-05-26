@@ -2,7 +2,10 @@ package com.krakedev.jdbc.videojuegos;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,14 +21,13 @@ public class VideojuegoJdbc {
 			boolean disponible, String genero) {
 
 		Connection con = null;
-		PreparedStatement ps = null;
 		Videojuego juego = null;
 
 		try {
 			con = Conexion.getConnection();
 			String sql = "INSERT INTO videojuegos(codigo, nombre, plataforma, precio, disponible, genero) VALUES(?,?,?,?,?,?)";
 
-			ps = con.prepareStatement(sql);
+			PreparedStatement ps = con.prepareStatement(sql);
 
 			ps.setString(1, codigo);
 			ps.setString(2, nombre);
@@ -52,4 +54,36 @@ public class VideojuegoJdbc {
 		}
 		return juego;
 	}
+
+	public static List<Videojuego> listar() {
+		List<Videojuego> juegos = new ArrayList<>();
+		Connection con = null;
+
+		try {
+			con = Conexion.getConnection();
+			String sql = "SELECT * FROM videojuegos";
+			PreparedStatement ps = con.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+
+			while (rs.next()) {
+				Videojuego juego = new Videojuego(rs.getString(1), rs.getString(2), rs.getString(3), rs.getDouble(4),
+						rs.getBoolean(5), rs.getString(6));
+				juegos.add(juego);
+
+			}
+
+		} catch (Exception e) {
+			log.error("Error al listar");
+			throw new RuntimeException("Error al listar: " + e.getMessage());
+		} finally {
+			try {
+				con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return juegos;
+	}
+
 }
