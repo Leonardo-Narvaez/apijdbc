@@ -115,6 +115,43 @@ public class VideojuegoJdbc {
 		}
 		return juego;
 	}
-	
-	
+
+	public static Videojuego actualizar(String codigo, String nombre, String plataforma, double precio,
+			boolean disponible, String genero) {
+		Connection con = null;
+		Videojuego juego = null;
+
+		try {
+			con = Conexion.getConnection();
+			String sql = "UPDATE videojuegos SET nombre = ?, plataforma = ?, precio = ?, disponible = ?, genero = ?) WHERE codigo = ?";
+			PreparedStatement ps = con.prepareStatement(sql);
+
+			ps.setString(1, nombre);
+			ps.setString(2, plataforma);
+			ps.setDouble(3, precio);
+			ps.setBoolean(4, disponible);
+			ps.setString(5, genero);
+			ps.setString(6, codigo);
+
+			juego = new Videojuego(codigo, nombre, plataforma, precio, disponible, genero);
+
+			int filas = ps.executeUpdate();
+			log.info("Filas Actualizadas: " + filas);
+
+		} catch (Exception e) {
+
+			log.error("Error al actualizar");
+			throw new RuntimeException("Error al actualizar: " + e.getMessage());
+
+		} finally {
+			try {
+				con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return juego;
+	}
+
 }
