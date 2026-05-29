@@ -39,6 +39,7 @@ public class VideojuegoJdbc {
 			juego = new Videojuego(codigo, nombre, plataforma, precio, disponible, genero);
 			int filas = ps.executeUpdate();
 
+			log.info("Videojuego insertado");
 			log.info("Filas insertadas: " + filas);
 		} catch (Exception e) {
 			log.error("Error al insertar: " + e.getMessage());
