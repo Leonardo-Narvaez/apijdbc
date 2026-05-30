@@ -97,6 +97,7 @@ public class VideojuegoJdbc {
 
 			PreparedStatement ps = con.prepareStatement(sql);
 
+			ps.setString(1, codigo);
 			ResultSet rs = ps.executeQuery();
 
 			if (rs.next()) {
@@ -124,7 +125,7 @@ public class VideojuegoJdbc {
 
 		try {
 			con = Conexion.getConnection();
-			String sql = "UPDATE videojuegos SET nombre = ?, plataforma = ?, precio = ?, disponible = ?, genero = ?) WHERE codigo = ?";
+			String sql = "UPDATE videojuegos SET nombre = ?, plataforma = ?, precio = ?, disponible = ?, genero = ? WHERE codigo = ?";
 			PreparedStatement ps = con.prepareStatement(sql);
 
 			ps.setString(1, nombre);
